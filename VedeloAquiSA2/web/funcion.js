@@ -27,9 +27,25 @@ async function postData() {
 }
 
 
+function search() {
+    setInnerHtml("contenedorProveedores","");
+    let id = getValue("cedulaJurFisProveedor");
+    loadAllProveedores();
 
+}
 
-function listarProveedor(url,callback) {
+function setInnerHtml(elementId, html) {
+    let element = getById(elementId);
+    element.innerHTML = html;
+
+}
+
+function loadAllProveedores(){
+    let url = "/VedeloAquiSA2/api/Proveedores/all";
+    callAjax(url, processProveedorResponse)
+}
+
+function callAjax(url,callback) {
     let request = new XMLHttpRequest();
     request.onreadystatechange = function () {
         if(this.readyState == 4 && this.status == 200){
@@ -37,10 +53,31 @@ function listarProveedor(url,callback) {
             callback(responseText);
         }
     };
-    request.open("GET", '/VedeloAquiSA2/api/Proveedores/all', true);
+    request.open("GET", url, true);
     request.send();
+
 }
 
+function processProveedorResponse(proveedor) {
+    let theHtml = "";
+    proveedor.forEach(function (proveedor, index,array) {
+        theHtml+=getProveedoresHTML(proveedor);
+
+    });
+    setInnerHtml("contenedorProveedor",theHtml);
+
+}
+
+function getProveedoresHTML(proveedor){
+
+    if(proveedor.cedulaJurFisProveedor){
+        return '<div id="contenedorProveedor'+proveedor.cedulaJurFisProveedor + '" class="item-menu"><span>'
+            + proveedor.nombreProveedor + '</span><img class="proveedor-img" src="' + proveedor.logoProveedor
+            + '"/><button type="button" class="btn btn-primary center-blobk" onclick="actualizarProveedor('+ proveedor.cedulaJurFisProveedor+')">Actualizar</button></div>';
+
+    }else
+        return "";
+}
 
 
 
@@ -52,16 +89,6 @@ function cedula (cedulaValor){
 
 
 
-function getProveedoresHTML(proveedor){
-
-    if(proveedor.cedulaJurFisProveedor){
-        return '<div id="contenedorProveedor'+proveedor.cedulaJurFisProveedor + '" class="item-menu"><span>'
-            + proveedor.nombreProveedor + '</span><img class="proveedor-img" src="' + proveedor.logoProveedor
-        + '"/><button type="button" class="btn btn-primary center-blobk" onclick="actualizarProveedor('+ proveedor.cedulaJurFisProveedor+')">Actualizar</button></div>';
-
-    }else
-        return "";
-}
 
 
 

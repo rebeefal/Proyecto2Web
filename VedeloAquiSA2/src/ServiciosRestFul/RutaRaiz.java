@@ -1,6 +1,7 @@
 package ServiciosRestFul;
 
 import DAO.Datos;
+import Objetos.Proveedor;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
@@ -15,7 +16,8 @@ public class RutaRaiz extends Application {
     public Set<Class<?>> getClasses() {
         Set<Class<?>> classes = super.getClasses();
         HashSet h = new HashSet<Class<?>>();
-        h.add(Datos.class);
+        h.add(ProductosRestService.class);
+        h.add(ProveedoresRestService.class);
         return super.getClasses();
     }
 }
