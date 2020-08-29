@@ -26,7 +26,7 @@
         <input type="submit"  value="Ingresar Producto"/>
       </form>
 
-      <form action="<%=request.getContextPath()%>/api/Proveedores/listarProveedores" method ="GET" >
+      <form method ="GET" action="CatalogoProveedor.jsp">
         <input type="submit"  value="Hacer compras"/>
       </form>
 

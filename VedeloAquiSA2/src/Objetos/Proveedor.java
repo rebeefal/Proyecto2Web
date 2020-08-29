@@ -10,32 +10,27 @@ public class Proveedor {
     String fechaInProveedor;
     String contrasenaProveedor;
     String logoProveedor;
-    public String entrada;
+    String acogeOfertasS;
+    int cantidadProductos;
 
     public Proveedor(){};
     public Proveedor(String cedulaJurFisProveedor,
                      String nombreProveedor,
                      String fechaInProveedor,
                      String contrasenaProveedor,
+                     String acogeOfertasS,
                      String logoProveedor) {
         this.cedulaJurFisProveedor = cedulaJurFisProveedor;
         this.nombreProveedor = nombreProveedor;
         this.fechaInProveedor = fechaInProveedor;
         this.contrasenaProveedor = contrasenaProveedor;
+        this.acogeOfertasS = acogeOfertasS;
         this.logoProveedor = logoProveedor;
 
-    }
-
-
-
-
-
-
-
-    public void mostrarEntradas(){
-        entrada = ("las entradas son: " + cedulaJurFisProveedor);
 
     }
+
+
 
 
     public String getCedulaJurFisProveedor() {
@@ -69,13 +64,26 @@ public class Proveedor {
     public void setContrasenaProveedor(String contrasenaProveedor) {
         this.contrasenaProveedor = contrasenaProveedor;
     }
+    public String getAcogeOfertasS() {
+        return acogeOfertasS;
+    }
 
+    public void setAcogeOfertasS(String acogeOfertasS) {
+        this.acogeOfertasS = acogeOfertasS;
+    }
     public String getLogoProveedor() {
         return logoProveedor;
     }
 
     public void setLogoProveedor(String logoProveedor) {
         this.logoProveedor = logoProveedor;
+    }
+    public int getCantidadProductos() {
+        return cantidadProductos;
+    }
+
+    public void setCantidadProductos(int cantidadProductos) {
+        this.cantidadProductos = cantidadProductos;
     }
 
 

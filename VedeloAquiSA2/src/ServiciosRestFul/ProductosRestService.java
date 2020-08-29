@@ -1,5 +1,6 @@
 package ServiciosRestFul;
 import DAO.Datos;
+import Objetos.Producto;
 import com.sun.net.httpserver.HttpServer;
 
 import java.io.IOException;
@@ -17,26 +18,23 @@ import javax.ws.rs.core.Response;
 public class ProductosRestService extends Datos {
 
 
-    @Context
-    HttpServletRequest request;
-    @Context
-    HttpServletResponse response;
+
 
     String idCompuesto;
     int x=0;
 
     @POST
     @Path("/agregarProducto")
-    public void Agregar_Producto (@FormParam("cedulaJurFisProveedor" )String cedulaJurFisProveedor,
+    public Response Agregar_ProductoViejo (@QueryParam("cedulaJurFisProveedor" )String cedulaJurFisProveedor,
                                       //Para el idProducto, se va a utilizar la cedula
-                                      @FormParam("descripcionProducto") String descripcionProducto,
-                                      @FormParam("descripcionEnganchaCliente" )String descripcionEnganchaCliente,
-                                      @FormParam("refrigeracionProducto") String refrigeracionProducto,
-                                      @FormParam("costoProducto") String costoProducto,
-                                      @FormParam("porcentajeGananciaProducto" )String porcentajeGananciaProducto,
-                                      @FormParam("cantidadStockProducto") String cantidadStockProducto,
-                                      @FormParam("logoProducto") String logoProducto)
-            throws IOException, ServletException {
+                                      @QueryParam("descripcionProducto") String descripcionProducto,
+                                      @QueryParam("descripcionEnganchaCliente" )String descripcionEnganchaCliente,
+                                      @QueryParam("refrigeracionProducto") String refrigeracionProducto,
+                                      @QueryParam("costoProducto") String costoProducto,
+                                      @QueryParam("porcentajeGananciaProducto" )String porcentajeGananciaProducto,
+                                      @QueryParam("cantidadStockProducto") String cantidadStockProducto,
+                                      @QueryParam("logoProducto") String logoProducto)
+             {
         x++;
         setIdCompuesto((cedulaJurFisProveedor + x).toString());
         agregarDatosLista(cedulaJurFisProveedor,
@@ -49,10 +47,10 @@ public class ProductosRestService extends Datos {
                                     cantidadStockProducto,
                                     logoProducto);
 
-        request.setAttribute("mensaje", "el producto" + descripcionProducto + "se ingreso");
-        request.getRequestDispatcher("/Producto.jsp").forward(request, response);
-
+        return Response.status(Response.Status.ACCEPTED).entity(getMensaje()).build();
     }
+
+
 
 
     @GET
@@ -62,7 +60,6 @@ public class ProductosRestService extends Datos {
         return Response.status(Response.Status.ACCEPTED).entity(listaProductos()).build();
     }
 
-
     public String getIdCompuesto() {
         return idCompuesto;
     }
@@ -70,7 +67,4 @@ public class ProductosRestService extends Datos {
     public void setIdCompuesto(String idCompuesto) {
         this.idCompuesto = idCompuesto;
     }
-
-
-
 }
