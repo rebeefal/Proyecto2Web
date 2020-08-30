@@ -64,12 +64,12 @@ h1 {
     width: 100%;
 }
 
-.icon {
+.proveedor-img {
     display: block;
     fill: #474544;
-    height: 50px;
-    margin: 0 auto;
-    width: 50px;
+    height: 100px;
+    float: none;
+    width: 100px;
 }
 
 .email {
