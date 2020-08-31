@@ -22,6 +22,11 @@
 </div>
 
 
+<form action="<%=request.getContextPath()%>/index.jsp"  >
+    <input type="submit"  value="Terminar"   />
+</form>
+
+
 <br/>
 
 

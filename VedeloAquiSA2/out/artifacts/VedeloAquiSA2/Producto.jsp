@@ -24,21 +24,21 @@
         <div class="name">
 
             <label for="descripcionProducto"> Descripción del producto  </label>
-            <input id="descripcionProducto" name="descripcionProducto" type="text" required pattern="^{1,120}$"/>
+            <input id="descripcionProducto" name="descripcionProducto" type="text" required />
 
         </div>
 
         <div class="name">
 
             <label for="descripcionEnganchaCliente"> Descripción para enganchar cliente  </label>
-            <input id="descripcionEnganchaCliente" name="descripcionEnganchaCliente" type="text" pattern="^{1,200}$" />
+            <input id="descripcionEnganchaCliente" name="descripcionEnganchaCliente" type="text"  />
 
         </div>
 
         <div class="name">
 
             <label for="refrigeracionProducto"> Requiere refrigeracion </label>
-            <input id="refrigeracionProducto" name="refrigeracionProducto" type="text" pattern="^{1,200}$" />
+            <input id="refrigeracionProducto" name="refrigeracionProducto" type="text"  />
 
         </div>
 
@@ -72,11 +72,18 @@
         </div>
 
         <div class="submit">
-            <input type="submit" value="Agregar" id="form_button" onclick="postProducto()" />
+            <input type="submit" value="Agregar" id="form_button" onclick="callAjaxPost()" />
         </div>
 
     </form><!-- // End form -->
+
+
+    <form action="<%=request.getContextPath()%>/index.jsp"  >
+        <input type="submit"  value="Terminar"   />
+    </form>
 </div><!-- // End #container -->
+
+
 
 <script type="text/javascript" src="funcion.js"></script>
 </body>

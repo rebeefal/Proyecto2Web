@@ -138,7 +138,7 @@ public class Datos {
 
         boolean existe = false;
         for(Producto p : productos ){
-            if (Integer.parseInt(p.getIdProducto()) == Integer.parseInt((id))){
+            if ((p.getIdProducto()).equals((id))){
                 existe = true;
             }
         }

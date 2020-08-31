@@ -42,7 +42,9 @@ public class ProveedoresRestService extends Datos {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public JsonObject Listar_ProveedorPorId (@PathParam("id")String id ) {
-        return convertProveedorToJson(listaProveedorPorId(id));
+        Proveedor proveedor = new Proveedor();
+        proveedor = listaProveedorPorId(id);
+        return convertProveedorToJson(proveedor);
     }
 
 

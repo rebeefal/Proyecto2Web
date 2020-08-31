@@ -1,5 +1,17 @@
 
+function datosF(){
+    dataProducto = {cedulaJurFisProveedor:(getValue("cedulaJurFisProveedor")).value,
+        idProducto:(getValue("cedulaJurFisProveedor")).value,
+        descripcionProducto:(getValue("descripcionProducto")).value,
+        descripcionEnganchaCliente:(getValue("descripcionEnganchaCliente")).value,
+        refrigeracionProducto:(getValue("refrigeracionProducto")).value,
+        costoProducto:(getValue("costoProducto")).value,
+        porcentajeGananciaProducto:(getValue("porcentajeGananciaProducto")).value,
+        cantidadStockProducto:(getValue("cantidadStockProducto")).value,
+        logoProducto:(getValue("logoProducto")).value}
 
+        return dataProducto;
+}
 
 
 async function postProveedor() {
@@ -57,20 +69,17 @@ async function postProducto() {
 }
 
 
-async function actualizar(url){
-
-        dataProducto = {cedulaJurFisProveedor:(getValue("cedulaJurFisProveedor")).value,
-            idProducto:(getValue("cedulaJurFisProveedor")).value,
-            descripcionProducto:(getValue("descripcionProducto")).value,
-            descripcionEnganchaCliente:(getValue("descripcionEnganchaCliente")).value,
-            refrigeracionProducto:(getValue("refrigeracionProducto")).value,
-            costoProducto:(getValue("costoProducto")).value,
-            porcentajeGananciaProducto:(getValue("porcentajeGananciaProducto")).value,
-            cantidadStockProducto:(getValue("cantidadStockProducto")).value,
-            logoProducto:(getValue("logoProducto")).value}
+async function actualizarProveedor(){
+        url = '/VedeloAquiSA2/api/Proveedores/update/',
+            dataProveedor = {cedulaJurFisProveedor:(getValue("cedulaJurFisProveedor")).value,
+                nombreProveedor:(getValue("nombreProveedor")).value,
+                fechaInProveedor:(getValue("fechaInProveedor")).value,
+                contrasenaProveedor:(getValue("contrasenaProveedor")).value,
+                acogeOfertasS:(getValue("acogeOfertasS")).value,
+                logoProveedor:(getValue("logoProveedor")).value}
 
     const response = await fetch(url, {
-        method: 'POST',
+        method: 'PUT',
         mode: 'cors',
         cache: 'no-cache',
         credentials: 'same-origin',
@@ -80,32 +89,114 @@ async function actualizar(url){
         },
         redirect: 'follow',
         referrerPolicy: 'no-referrer',
-        body: JSON.stringify(dataProducto)
+        body: JSON.stringify(dataProveedor)
     });
     return response.json();
+}
+
+
+function callAjaxPost() {
+    url = '/VedeloAquiSA2/api/Productos/add';
+
+    let request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+        if(this.readyState == 4 && this.status == 200){
+
+        }
+    };
+    request.open("POST", url, true);
+    var jsonString = JSON.stringify(datosF())
+    request.setRequestHeader("Content-type", "application/json");
+    request.send(jsonString);
+
 }
 
 
 
 function searchProveedor() {
     loadAllProveedores();
-
 }
 
 function searchProducto(id) {
     loadById(id);
+}
+function loadById(id){
+    let url = "/VedeloAquiSA2/api/Productos/" + id;
+    callAjax(url, processProductoResponse)
 }
 
 function cargarDatos(){
     loadByIdProveedor((getValue("cedulaJurFisProveedor")).value);
 }
 
+function loadByIdProveedor(id){
+    let url = "/VedeloAquiSA2/api/Proveedores/"+id;
+    callAjax(url, asignaValoresCargados )
 
-
-function actualizarProveedor(id){
-    let url = "/VedeloAquiSA2/api/Productos/update/"+id ;
-    callAjaxUpdate(url, processProveedorResponse)
 }
+
+function callAjax(url,callback) {
+    let request = new XMLHttpRequest();
+    request.open("GET", url, true);
+    request.onreadystatechange = function () {
+        if(this.readyState == 4 && this.status == 200){
+            let responseText = JSON.parse(this.responseText);
+            callback(responseText);
+        }
+    };
+    request.send();
+
+}
+
+
+
+function asignaValoresCargados(proveedor){
+    let theHtml =  "";
+    setInnerHtml("actualizarContenedor" , theHtml);
+    theHtml=getProveedoresActualizaHTML(proveedor);
+    setInnerHtml("actualizarContenedor" , theHtml);
+
+
+
+}
+
+function getProveedoresActualizaHTML(proveedor) {
+
+    return '<div class="name"><label> Ingrese los nuevos datos para el proveedor: '+ proveedor.cedulaJurFisProveedor +'   </label></div>'+
+        '<div class="name">\n' +
+        '            <label for="nombreProveedor"> Nombre del proveedor:  </label>\n' +
+        '            <input id="nombreProveedor" name="nombreProveedor" type="text"  placeholder="'+ proveedor.nombreProveedor +'"  value="'+ proveedor.nombreProveedor +'"   required />\n' +
+        '</div>'+
+        '<div class="name">\n' +
+        '            <label for="fechaInProveedor"> Fecha:  </label>\n' +
+        '            <input id="fechaInProveedor" name="fechaInProveedor"  placeholder="'+ proveedor.fechaInProveedor +'" value="'+ proveedor.fechaInProveedor +'"  type="text" required/>\n' +
+        '</div>'+
+        '<div class="name">\n' +
+        '\n' +
+        '            <label for="contrasenaProveedor"> Contraseña:  </label>\n' +
+        '            <input id="contrasenaProveedor" name="contrasenaProveedor" placeholder="'+ proveedor.contrasenaProveedor +'"  value="'+ proveedor.contrasenaProveedor +'" type="password" pattern="(?=(.*[0-9]){2})(?=.*[a-z])(?=.*[A-Z]).{8,}" required/>\n' +
+        '            <label >   </label>\n' +
+        '\n' +
+        '        </div>'+
+        '<div class="name">\n' +
+        '            <label for="acogeOfertasS"> Acoge ofertas:  </label>\n' +
+        '            <input id="acogeOfertasS" name="acogeOfertasS"   placeholder="'+ proveedor.acogeOfertasS +'"  value="'+ proveedor.acogeOfertasS +'" type="text"  required/>\n' +
+        '\n' +
+        '        </div>'+
+        '<div class="name">\n' +
+        '\n' +
+        '            <label for="logoProveedor"> URL del logo: </label>\n' +
+        '            <input id="logoProveedor" name="logoProveedor" type="text"  placeholder="'+ proveedor.logoProveedor +'"   value="'+ proveedor.logoProveedor +'" requiered pattern="https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)" />\n' +
+        '\n' +
+        '        </div>'+
+        '<button type="button" class="btn btn-primary center-blobk"   onclick="actualizarProveedor()">Comprar</button>';
+
+
+}
+
+
+
+
 
 
 function setInnerHtml(elementId, html) {
@@ -113,9 +204,6 @@ function setInnerHtml(elementId, html) {
     element.innerHTML = html;
 
 }
-
-
-
 
 function loadAllProveedores(){
     let url = "/VedeloAquiSA2/api/Proveedores/all";
@@ -125,70 +213,6 @@ function loadAllProveedores(){
 
 
 
-function callAjaxUpdate(url,callback) {
-    let request = new XMLHttpRequest();
-    request.onreadystatechange = function () {
-        if(this.readyState == 4 && this.status == 200){
-            let responseText = JSON.parse(this.responseText);
-            callback(responseText);
-        }
-    };
-    request.open("PUT", url, true);
-    request.send();
-
-}
-
-
-
-function loadById(id){
-    let url = "/VedeloAquiSA2/api/Productos/" + id;
-    callAjax(url, processProductoResponse)
-}
-
-
-function loadByIdProveedor(id){
-    let url = "/VedeloAquiSA2/api/Proveedor/" + id;
-    callAjax(url, asignaValoresCargados)
-}
-
-function asignaValoresCargados(proveedor){
-    setInnerHtml = ("actualizarContenedor" , "");
-    proveedor.forEach(function (proveedor, index,array) {
-        theHtml+=getProveedoresActualizaHTML(proveedor);
-    });
-
-    setInnerHtml = ("actualizarContenedor" , theHtml);
-}
-
-function getProveedoresActualizaHTML(proveedor) {
-
-    return '<div class="name"><label> Ingrese los nuevos datos para el proveedor: '+ proveedor.cedulaJurFisProveedor +'   </label></div>'+
-        '<div class="name">\n' +
-        '            <label for="nombreProveedor"> Nombre del proveedor:  </label>\n' +
-        '            <input id="nombreProveedor" name="nombreProveedor" type="text"   placeholder="'+ proveedor.nombreProveedor +'"   required />\n' +
-        '</div>'+
-        '<div class="name">\n' +
-        '            <label for="fechaInProveedor"> Fecha:  </label>\n' +
-        '            <input id="fechaInProveedor" name="fechaInProveedor" placeholder="'+ proveedor.fechaInProveedor +'"  type="text" required/>\n' +
-        '</div>';
-
-}
-
-
-
-
-function callAjax(url,callback) {
-    let request = new XMLHttpRequest();
-    request.onreadystatechange = function () {
-        if(this.readyState == 4 && this.status == 200){
-            let responseText = JSON.parse(this.responseText);
-            callback(responseText);
-        }
-    };
-    request.open("GET", url, true);
-    request.send();
-
-}
 
 function processProveedorResponse(proveedor) {
     let theHtml = "";
@@ -207,28 +231,9 @@ function processProductoResponse(producto) {
         theHtml+=getProductosHTML(producto);
 
     });
-    setInnerHtml("contenedorProveedores","");
+
     setInnerHtml("contenedorProveedores",theHtml);
 
-}
-
-
-
-
-function getProveedorActualizarHTML(proveedor){
-
-    if(proveedor.cedulaJurFisProveedor){
-
-        return '<br/><div id="contenedorProveedores'+proveedor.cedulaJurFisProveedor + '" class="item-menu">' +
-            '<span>'+ proveedor.nombreProveedor + '</span>' +
-            '<img class="proveedor-img" src="' + proveedor.logoProveedor+ '"/>' +
-            '<button type="button" class="btn btn-primary center-blobk"  onclick="searchProducto(\''+ proveedor.cedulaJurFisProveedor+'\')">Productos</button>' +
-            '<br/></div>';
-
-//
-
-    }else
-        return "";
 }
 
 
