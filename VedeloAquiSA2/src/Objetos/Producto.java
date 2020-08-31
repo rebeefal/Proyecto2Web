@@ -11,7 +11,6 @@ public class Producto {
     String costoProducto;
     String porcentajeGananciaProducto;
     String cantidadStockProducto;
-
     String logoProducto;
     String entrada;
 

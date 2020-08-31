@@ -1,6 +1,7 @@
 package ServiciosRestFul;
 
 import DAO.Datos;
+import Objetos.Producto;
 import Objetos.Proveedor;
 
 import javax.json.*;
@@ -35,6 +36,15 @@ public class ProveedoresRestService extends Datos {
         }
         return jsonArray.build();
     }
+
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public JsonObject Listar_ProveedorPorId (@PathParam("id")String id ) {
+        return convertProveedorToJson(listaProveedorPorId(id));
+    }
+
 
 
     @PUT

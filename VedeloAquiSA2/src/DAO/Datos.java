@@ -11,6 +11,10 @@ public class Datos {
 
     String mensaje;
 
+
+
+    int contador=0;
+
     private static List<Proveedor> proveedores = new ArrayList<Proveedor>();
     private Proveedor proveedor;
 
@@ -28,6 +32,15 @@ public class Datos {
             muestraMensaje(1);
         }
     }
+    public void agregarDatosLista(Producto producto){
+        if(productoExiste(producto.getIdProducto())){
+            muestraMensaje(0);
+        }else{
+            producto.setIdProducto(producto.getIdProducto()+getContador());
+            productos.add(producto);
+            muestraMensaje(1);
+        }
+    }
 
     public void actualizarDatosLista(Proveedor proveedorActualizado){
         int x=0;
@@ -39,6 +52,30 @@ public class Datos {
             x++;
         }
     }
+
+    public List<Producto> listaProductosPorProveedor(String id) {
+        for (Producto p : productos){
+            if (p.getCedulaJurFisProveedor().equals(id)){
+                productosPorProveedor.add(p);
+            }
+        }
+        return productosPorProveedor;
+    }
+
+
+    public Proveedor listaProveedorPorId(String id) {
+        Proveedor aActualizar = new Proveedor();
+        for (Proveedor p : proveedores){
+            if (p.getCedulaJurFisProveedor().equals(id)){
+                aActualizar = p;
+            }
+        }
+        return aActualizar;
+    }
+
+
+
+
 
     public List<Proveedor> listaProveedores() {
         if(proveedores.isEmpty()){
@@ -92,43 +129,7 @@ public class Datos {
     }
 
 
-    public void agregarDatosLista(String cedulaJurFisProveedor,
-                                  String idProducto,
-                                  String descripcionProducto,
-                                  String descripcionEnganchaCliente,
-                                  String refrigeracionProducto,
-                                  String costoProducto,
-                                  String porcentajeGananciaProducto,
-                                  String cantidadStockProducto,
-                                  String logoProducto){
 
-
-
-        if(!proveedorExiste(cedulaJurFisProveedor)){
-            muestraMensaje(3);
-
-        }else if(productoExiste(idProducto)){
-
-            muestraMensaje(0);
-
-        }else{
-            Producto producto = new Producto();
-            producto.setCedulaJurFisProveedor(cedulaJurFisProveedor);
-            producto.setIdProducto(idProducto);
-            producto.setDescripcionProducto(descripcionProducto);
-            producto.setDescripcionEnganchaCliente(descripcionEnganchaCliente);
-            producto.setRefrigeracionProducto(refrigeracionProducto);
-            producto.setCostoProducto(costoProducto);
-            producto.setPorcentajeGananciaProducto(porcentajeGananciaProducto);
-            producto.setCantidadStockProducto(cantidadStockProducto);
-            producto.setLogoProducto(logoProducto);
-
-            productos.add(producto);
-
-            muestraMensaje(1);
-
-        }
-    }
 
 
 
@@ -237,6 +238,14 @@ public class Datos {
         return proveedores;
     }
 
+    public int getContador() {
+        contador++;
+        return contador;
+    }
+
+    public void setContador(int contador) {
+        this.contador = contador;
+    }
 
 
 

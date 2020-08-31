@@ -2,13 +2,12 @@
 <html>
 <head>
     <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="Estilo.css">
+    <link rel="stylesheet" type="text/css" href="EstiloPaginas.css">
 </head>
 
-
-
-
 <body>
+
+
 
 
 <div id="container">
@@ -20,12 +19,16 @@
     </div>
     <form  name="contact_form" id="contact_form" >
 
+
+
+
         <div class="name">
 
-            <label for="cedulaJurFisProveedor"> Cedula Fisica o Juridica  </label>
-            <input id="cedulaJurFisProveedor" name="cedulaJurFisProveedor" type="text" pattern="[0]\d{1}-\d{4}-\d{4}$|[3]-\d{3}-\d{6}$" required />
+            <label for="cedulaJurFisProveedor"> Nombre del proveedor:  </label>
+            <input id="cedulaJurFisProveedor" name="cedulaJurFisProveedor" type="text"    required />
 
         </div>
+
 
         <div class="name">
 
@@ -65,7 +68,7 @@
 
 
         <div class="submit">
-            <input type="submit" value="Agregar" id="form_button"  onclick="postData()"/>
+            <input type="submit" value="Agregar" id="form_button"  onclick="postProveedor()"/>
         </div>
 
     </form><!-- // End form -->

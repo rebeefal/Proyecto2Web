@@ -2,22 +2,26 @@
 <html>
 <head>
     <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="Estilo.css">
+    <link rel="stylesheet" type="text/css" href="EstiloPaginas.css">
 </head>
-
 
 <body>
 
-
 <br/>
-<label for="cedulaJurFisProveedor">Id:</label>
-<input id="cedulaJurFisProveedor" name="cedulaJurFisProveedor" type="text">
-<button onclick="search()">Search</button>
+
+<button onclick="searchProveedor()">Search</button>
 <br/>
 <div id="contenedorProveedores" class="contenedor-catalogo">
 
 
 </div>
+
+<div id="contenedorProductos" class="contenedor-catalogo">
+
+
+</div>
+
+
 <br/>
 
 

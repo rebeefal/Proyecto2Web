@@ -9,7 +9,7 @@
 <html>
 <head>
   <title>Vendelo Aqui Menu principal</title>
-  <link rel="stylesheet" type="text/css" href="Estilo.css">
+  <link rel="stylesheet" type="text/css" href="EstiloPaginas.css">
 </head>
 <body>
 <h1>Bienvenido a Vendelo Aqui</h1>
@@ -20,6 +20,9 @@
 
       <form action="Proveedor.jsp" method ="POST" >
         <input type="submit"  value="Ingresar Proveedor" />
+      </form>
+      <form action="ActualProveedor.jsp" method ="POST" >
+        <input type="submit"  value="Actualizar Proveedor" />
       </form>
 
       <form action="Producto.jsp" method ="POST" >
