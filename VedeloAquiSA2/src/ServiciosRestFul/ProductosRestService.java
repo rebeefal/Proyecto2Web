@@ -43,6 +43,7 @@ public class ProductosRestService extends Datos {
     }
 
 
+    // muestra los productos por proveedor
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -70,16 +71,6 @@ public class ProductosRestService extends Datos {
             jsonBuilder.add("logoProducto" , producto.getLogoProducto());
         }
         return jsonBuilder.build();
-    }
-
-
-
-
-    @GET
-    @Path("/listarProducto")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response Listar_Productos_Proveedor (){
-        return Response.status(Response.Status.ACCEPTED).entity(listaProductos()).build();
     }
 
 

@@ -68,13 +68,13 @@
 
 
         <div class="submit">
-            <input type="submit" value="Agregar" id="form_button"  onclick="postProveedor()"/>
+            <input type="submit" value="Agregar" id="form_button" onclick="paramCallAjaxProveedores()"  />
         </div>
 
     </form><!-- // End form -->
 
 
-    <form action="<%=request.getContextPath()%>/index.jsp"  >
+    <form action="<%=request.getContextPath()%>/index.jsp"  class="boton-terminar" >
         <input type="submit"  value="Terminar"   />
     </form>
 

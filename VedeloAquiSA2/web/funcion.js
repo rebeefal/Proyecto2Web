@@ -1,5 +1,5 @@
 
-function datosF(){
+function datosProd(){
     dataProducto = {cedulaJurFisProveedor:(getValue("cedulaJurFisProveedor")).value,
         idProducto:(getValue("cedulaJurFisProveedor")).value,
         descripcionProducto:(getValue("descripcionProducto")).value,
@@ -14,103 +14,50 @@ function datosF(){
 }
 
 
-async function postProveedor() {
-    url = '/VedeloAquiSA2/api/Proveedores/add',
-        data = {cedulaJurFisProveedor:(getValue("cedulaJurFisProveedor")).value,
-            nombreProveedor:(getValue("nombreProveedor")).value,
-            fechaInProveedor:(getValue("fechaInProveedor")).value,
-            contrasenaProveedor:(getValue("contrasenaProveedor")).value,
-            acogeOfertasS:(getValue("acogeOfertasS")).value,
-            logoProveedor:(getValue("logoProveedor")).value}
+function datosProv(){
+    dataProv = {cedulaJurFisProveedor:(getValue("cedulaJurFisProveedor")).value,
+        nombreProveedor:(getValue("nombreProveedor")).value,
+        fechaInProveedor:(getValue("fechaInProveedor")).value,
+        contrasenaProveedor:(getValue("contrasenaProveedor")).value,
+        acogeOfertasS:(getValue("acogeOfertasS")).value,
+        logoProveedor:(getValue("logoProveedor")).value}
 
-    const response = await fetch(url, {
-        method: 'POST',
-        mode: 'cors',
-        cache: 'no-cache',
-        credentials: 'same-origin',
-        headers: {
-            'Content-Type': 'application/json'
-
-        },
-        redirect: 'follow',
-        referrerPolicy: 'no-referrer',
-        body: JSON.stringify(data)
-    });
-    return response.json();
+    return dataProv;
 }
 
 
-async function postProducto() {
-    url = '/VedeloAquiSA2/api/Productos/add',
-        dataProducto = {cedulaJurFisProveedor:(getValue("cedulaJurFisProveedor")).value,
-            idProducto:(getValue("cedulaJurFisProveedor")).value,
-            descripcionProducto:(getValue("descripcionProducto")).value,
-            descripcionEnganchaCliente:(getValue("descripcionEnganchaCliente")).value,
-            refrigeracionProducto:(getValue("refrigeracionProducto")).value,
-            costoProducto:(getValue("costoProducto")).value,
-            porcentajeGananciaProducto:(getValue("porcentajeGananciaProducto")).value,
-            cantidadStockProducto:(getValue("cantidadStockProducto")).value,
-            logoProducto:(getValue("logoProducto")).value}
-
-    const response = await fetch(url, {
-        method: 'POST',
-        mode: 'cors',
-        cache: 'no-cache',
-        credentials: 'same-origin',
-        headers: {
-            'Content-Type': 'application/json'
-
-        },
-        redirect: 'follow',
-        referrerPolicy: 'no-referrer',
-        body: JSON.stringify(dataProducto)
-    });
-    return response.json();
-}
-
-
-async function actualizarProveedor(){
-        url = '/VedeloAquiSA2/api/Proveedores/update/',
-            dataProveedor = {cedulaJurFisProveedor:(getValue("cedulaJurFisProveedor")).value,
-                nombreProveedor:(getValue("nombreProveedor")).value,
-                fechaInProveedor:(getValue("fechaInProveedor")).value,
-                contrasenaProveedor:(getValue("contrasenaProveedor")).value,
-                acogeOfertasS:(getValue("acogeOfertasS")).value,
-                logoProveedor:(getValue("logoProveedor")).value}
-
-    const response = await fetch(url, {
-        method: 'PUT',
-        mode: 'cors',
-        cache: 'no-cache',
-        credentials: 'same-origin',
-        headers: {
-            'Content-Type': 'application/json'
-
-        },
-        redirect: 'follow',
-        referrerPolicy: 'no-referrer',
-        body: JSON.stringify(dataProveedor)
-    });
-    return response.json();
-}
-
-
-function callAjaxPost() {
+function paramCallAjaxProductos(){
     url = '/VedeloAquiSA2/api/Productos/add';
+    datos = datosProd();
+    callAjaxPost(url, datos);
+}
 
+
+function paramCallAjaxActualProv(){
+    url = '/VedeloAquiSA2/api/Proveedores/update';
+    datos = datosProv();
+    callAjaxPost(url, datos);
+}
+
+////onclick="postProveedor()"/>
+function paramCallAjaxProveedores(){
+    url = '/VedeloAquiSA2/api/Proveedores/add';
+    datos = datosProv();
+    callAjaxPost(url, datos);
+}
+
+
+function callAjaxPost(url,datos) {
     let request = new XMLHttpRequest();
     request.onreadystatechange = function () {
         if(this.readyState == 4 && this.status == 200){
-
         }
     };
     request.open("POST", url, true);
-    var jsonString = JSON.stringify(datosF())
+    var jsonString = JSON.stringify(datos)
     request.setRequestHeader("Content-type", "application/json");
     request.send(jsonString);
-
 }
-
 
 
 function searchProveedor() {
@@ -132,69 +79,7 @@ function cargarDatos(){
 function loadByIdProveedor(id){
     let url = "/VedeloAquiSA2/api/Proveedores/"+id;
     callAjax(url, asignaValoresCargados )
-
 }
-
-function callAjax(url,callback) {
-    let request = new XMLHttpRequest();
-    request.open("GET", url, true);
-    request.onreadystatechange = function () {
-        if(this.readyState == 4 && this.status == 200){
-            let responseText = JSON.parse(this.responseText);
-            callback(responseText);
-        }
-    };
-    request.send();
-
-}
-
-
-
-function asignaValoresCargados(proveedor){
-    let theHtml =  "";
-    setInnerHtml("actualizarContenedor" , theHtml);
-    theHtml=getProveedoresActualizaHTML(proveedor);
-    setInnerHtml("actualizarContenedor" , theHtml);
-
-
-
-}
-
-function getProveedoresActualizaHTML(proveedor) {
-
-    return '<div class="name"><label> Ingrese los nuevos datos para el proveedor: '+ proveedor.cedulaJurFisProveedor +'   </label></div>'+
-        '<div class="name">\n' +
-        '            <label for="nombreProveedor"> Nombre del proveedor:  </label>\n' +
-        '            <input id="nombreProveedor" name="nombreProveedor" type="text"  placeholder="'+ proveedor.nombreProveedor +'"  value="'+ proveedor.nombreProveedor +'"   required />\n' +
-        '</div>'+
-        '<div class="name">\n' +
-        '            <label for="fechaInProveedor"> Fecha:  </label>\n' +
-        '            <input id="fechaInProveedor" name="fechaInProveedor"  placeholder="'+ proveedor.fechaInProveedor +'" value="'+ proveedor.fechaInProveedor +'"  type="text" required/>\n' +
-        '</div>'+
-        '<div class="name">\n' +
-        '\n' +
-        '            <label for="contrasenaProveedor"> Contraseña:  </label>\n' +
-        '            <input id="contrasenaProveedor" name="contrasenaProveedor" placeholder="'+ proveedor.contrasenaProveedor +'"  value="'+ proveedor.contrasenaProveedor +'" type="password" pattern="(?=(.*[0-9]){2})(?=.*[a-z])(?=.*[A-Z]).{8,}" required/>\n' +
-        '            <label >   </label>\n' +
-        '\n' +
-        '        </div>'+
-        '<div class="name">\n' +
-        '            <label for="acogeOfertasS"> Acoge ofertas:  </label>\n' +
-        '            <input id="acogeOfertasS" name="acogeOfertasS"   placeholder="'+ proveedor.acogeOfertasS +'"  value="'+ proveedor.acogeOfertasS +'" type="text"  required/>\n' +
-        '\n' +
-        '        </div>'+
-        '<div class="name">\n' +
-        '\n' +
-        '            <label for="logoProveedor"> URL del logo: </label>\n' +
-        '            <input id="logoProveedor" name="logoProveedor" type="text"  placeholder="'+ proveedor.logoProveedor +'"   value="'+ proveedor.logoProveedor +'" requiered pattern="https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)" />\n' +
-        '\n' +
-        '        </div>'+
-        '<button type="button" class="btn btn-primary center-blobk"   onclick="actualizarProveedor()">Comprar</button>';
-
-
-}
-
-
 
 
 
@@ -235,6 +120,64 @@ function processProductoResponse(producto) {
     setInnerHtml("contenedorProveedores",theHtml);
 
 }
+
+
+function callAjax(url,callback) {
+    let request = new XMLHttpRequest();
+
+    request.onreadystatechange = function () {
+        if(this.readyState == 4 && this.status == 200){
+            let responseText = JSON.parse(this.responseText);
+            callback(responseText);
+        }
+    };
+    request.open("GET", url, true);
+    request.send();
+}
+
+
+
+function asignaValoresCargados(proveedor){
+    let theHtml =  "";
+    setInnerHtml("actualizarContenedor" , theHtml);
+    theHtml=getProveedoresActualizaHTML(proveedor);
+    setInnerHtml("actualizarContenedor" , theHtml);
+}
+
+function getProveedoresActualizaHTML(proveedor) {
+
+    return '<div class="name"><label> Ingrese los nuevos datos para el proveedor: '+ proveedor.cedulaJurFisProveedor +'   </label></div>'+
+        '<div class="name">\n' +
+        '            <label for="nombreProveedor"> Nombre del proveedor:  </label>\n' +
+        '            <input id="nombreProveedor" name="nombreProveedor" type="text"  placeholder="'+ proveedor.nombreProveedor +'"  value="'+ proveedor.nombreProveedor +'"   required />\n' +
+        '</div>'+
+        '<div class="name">\n' +
+        '            <label for="fechaInProveedor"> Fecha:  </label>\n' +
+        '            <input id="fechaInProveedor" name="fechaInProveedor"  placeholder="'+ proveedor.fechaInProveedor +'" value="'+ proveedor.fechaInProveedor +'"  type="text" required/>\n' +
+        '</div>'+
+        '<div class="name">\n' +
+        '\n' +
+        '            <label for="contrasenaProveedor"> Contraseña:  </label>\n' +
+        '            <input id="contrasenaProveedor" name="contrasenaProveedor" placeholder="'+ proveedor.contrasenaProveedor +'"  value="'+ proveedor.contrasenaProveedor +'" type="password" pattern="(?=(.*[0-9]){2})(?=.*[a-z])(?=.*[A-Z]).{8,}" required/>\n' +
+        '            <label >   </label>\n' +
+        '\n' +
+        '        </div>'+
+        '<div class="name">\n' +
+        '            <label for="acogeOfertasS"> Acoge ofertas:  </label>\n' +
+        '            <input id="acogeOfertasS" name="acogeOfertasS"   placeholder="'+ proveedor.acogeOfertasS +'"  value="'+ proveedor.acogeOfertasS +'" type="text"  required/>\n' +
+        '\n' +
+        '        </div>'+
+        '<div class="name">\n' +
+        '\n' +
+        '            <label for="logoProveedor"> URL del logo: </label>\n' +
+        '            <input id="logoProveedor" name="logoProveedor" type="text"  placeholder="'+ proveedor.logoProveedor +'"   value="'+ proveedor.logoProveedor +'" requiered pattern="https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)" />\n' +
+        '\n' +
+        '        </div>'+
+        '<button type="button" class="btn btn-primary center-blobk"   onclick="paramCallAjaxActualProv()">Comprar</button>';
+}
+
+
+
 
 
 

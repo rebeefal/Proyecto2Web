@@ -2,6 +2,7 @@ package DAO;
 
 import Objetos.Producto;
 import Objetos.Proveedor;
+import com.sun.deploy.security.SelectableSecurityManager;
 
 import javax.json.*;
 import javax.ws.rs.Produces;
@@ -10,10 +11,8 @@ import java.util.*;
 public class Datos {
 
     String mensaje;
-
-
-
     int contador=0;
+    private MensajeDeExiste mensajeExiste = new MensajeDeExiste();
 
     private static List<Proveedor> proveedores = new ArrayList<Proveedor>();
     private Proveedor proveedor;
@@ -24,30 +23,32 @@ public class Datos {
     private static List<Producto> productosPorProveedor = new ArrayList<Producto>();
 
 
-    public void agregarDatosLista(Proveedor proveedor){
+    public void agregarDatosLista(Proveedor proveedor){ // Datos para proveedor
         if(proveedorExiste(proveedor.getCedulaJurFisProveedor())){
-            muestraMensaje(0);
+            mensajeExiste.muestraMensaje(0);
         }else{
             proveedores.add(proveedor);
-            muestraMensaje(1);
+            mensajeExiste.muestraMensaje(1);
         }
     }
-    public void agregarDatosLista(Producto producto){
+    public void agregarDatosLista(Producto producto){ // Datos para producto
         if(productoExiste(producto.getIdProducto())){
-            muestraMensaje(0);
+            mensajeExiste.muestraMensaje(0);
+
         }else{
             producto.setIdProducto(producto.getIdProducto()+getContador());
             productos.add(producto);
-            muestraMensaje(1);
+            mensajeExiste.muestraMensaje(1);
         }
     }
 
     public void actualizarDatosLista(Proveedor proveedorActualizado){
         int x=0;
+        listaProveedores();
         for ( Proveedor p : proveedores){
             if ( proveedorActualizado.getCedulaJurFisProveedor().equals(p.getCedulaJurFisProveedor()) ){
                 proveedores.set(x, proveedorActualizado);
-                muestraMensaje(2);
+                mensajeExiste.muestraMensaje(2);
             }
             x++;
         }
@@ -64,7 +65,9 @@ public class Datos {
 
 
     public Proveedor listaProveedorPorId(String id) {
+        listaProveedores();
         Proveedor aActualizar = new Proveedor();
+
         for (Proveedor p : proveedores){
             if (p.getCedulaJurFisProveedor().equals(id)){
                 aActualizar = p;
@@ -73,15 +76,17 @@ public class Datos {
         return aActualizar;
     }
 
-
-
-
-
     public List<Proveedor> listaProveedores() {
-        if(proveedores.isEmpty()){
+        boolean cargados=false; // revisa si los datos estaticos han sido ingresados.
+        for(Proveedor p : proveedores){
+            if ((p.getCedulaJurFisProveedor()).equals("01-1111-1111")){
+                cargados=true;
+                // ya se han ingresado los datos estaticos del arreglo
+            }
+        }
+        if((proveedores.isEmpty())||cargados==false){
             preCargarLista();
         }
-
         return proveedores;
     }
 
@@ -130,10 +135,6 @@ public class Datos {
 
 
 
-
-
-
-
     public boolean productoExiste(String id){
 
         boolean existe = false;
@@ -147,42 +148,6 @@ public class Datos {
 
 
     public List<Producto> listaProductos(){ return productos; }
-
-
-
-    private String muestraMensaje(int codigo){
-
-        switch (codigo){
-            case 0:
-                setMensaje( "Ya existe");
-                System.out.println("");
-                break;
-            case 1:
-                setMensaje("Se ha ingresado correctamente" );
-                System.out.println("Se ha ingresado correctamente");
-                break;
-            case 2:
-                setMensaje( "Se actualizó el proveedor ");
-                break;
-            case 3:
-                setMensaje( "El proveedor de ese producto no ha sido ingresado: ");
-                break;
-        }
-        return mensaje;
-
-    }
-
-
-
-    public String getMensaje() {
-        return mensaje;
-    }
-
-    public void setMensaje(String mensaje) {
-        this.mensaje = mensaje;
-    }
-
-
 
 
     public List<Proveedor> preCargarLista(){

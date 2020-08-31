@@ -1,5 +1,5 @@
 
-function datosF(){
+function datosProd(){
     dataProducto = {cedulaJurFisProveedor:(getValue("cedulaJurFisProveedor")).value,
         idProducto:(getValue("cedulaJurFisProveedor")).value,
         descripcionProducto:(getValue("descripcionProducto")).value,
@@ -14,59 +14,17 @@ function datosF(){
 }
 
 
-async function postProveedor() {
-    url = '/VedeloAquiSA2/api/Proveedores/add',
-        data = {cedulaJurFisProveedor:(getValue("cedulaJurFisProveedor")).value,
-            nombreProveedor:(getValue("nombreProveedor")).value,
-            fechaInProveedor:(getValue("fechaInProveedor")).value,
-            contrasenaProveedor:(getValue("contrasenaProveedor")).value,
-            acogeOfertasS:(getValue("acogeOfertasS")).value,
-            logoProveedor:(getValue("logoProveedor")).value}
+function datosProv(){
+    dataProv = {cedulaJurFisProveedor:(getValue("cedulaJurFisProveedor")).value,
+        nombreProveedor:(getValue("nombreProveedor")).value,
+        fechaInProveedor:(getValue("fechaInProveedor")).value,
+        contrasenaProveedor:(getValue("contrasenaProveedor")).value,
+        acogeOfertasS:(getValue("acogeOfertasS")).value,
+        logoProveedor:(getValue("logoProveedor")).value}
 
-    const response = await fetch(url, {
-        method: 'POST',
-        mode: 'cors',
-        cache: 'no-cache',
-        credentials: 'same-origin',
-        headers: {
-            'Content-Type': 'application/json'
-
-        },
-        redirect: 'follow',
-        referrerPolicy: 'no-referrer',
-        body: JSON.stringify(data)
-    });
-    return response.json();
+    return dataProv;
 }
 
-
-async function postProducto() {
-    url = '/VedeloAquiSA2/api/Productos/add',
-        dataProducto = {cedulaJurFisProveedor:(getValue("cedulaJurFisProveedor")).value,
-            idProducto:(getValue("cedulaJurFisProveedor")).value,
-            descripcionProducto:(getValue("descripcionProducto")).value,
-            descripcionEnganchaCliente:(getValue("descripcionEnganchaCliente")).value,
-            refrigeracionProducto:(getValue("refrigeracionProducto")).value,
-            costoProducto:(getValue("costoProducto")).value,
-            porcentajeGananciaProducto:(getValue("porcentajeGananciaProducto")).value,
-            cantidadStockProducto:(getValue("cantidadStockProducto")).value,
-            logoProducto:(getValue("logoProducto")).value}
-
-    const response = await fetch(url, {
-        method: 'POST',
-        mode: 'cors',
-        cache: 'no-cache',
-        credentials: 'same-origin',
-        headers: {
-            'Content-Type': 'application/json'
-
-        },
-        redirect: 'follow',
-        referrerPolicy: 'no-referrer',
-        body: JSON.stringify(dataProducto)
-    });
-    return response.json();
-}
 
 
 async function actualizarProveedor(){
@@ -95,22 +53,39 @@ async function actualizarProveedor(){
 }
 
 
-function callAjaxPost() {
-    url = '/VedeloAquiSA2/api/Productos/add';
 
+function paramCallAjaxProductos(){
+    url = '/VedeloAquiSA2/api/Productos/add';
+    datos = datosProd();
+    callAjaxPost(url, datos);
+}
+
+
+function paramCallAjaxActualProv(){
+    url = '/VedeloAquiSA2/api/Proveedores/update';
+    datos = datosProv();
+    callAjaxPost(url, datos);
+}
+
+////onclick="postProveedor()"/>
+function paramCallAjaxProveedores(){
+    url = '/VedeloAquiSA2/api/Proveedores/add';
+    datos = datosProv();
+    callAjaxPost(url, datos);
+}
+
+
+function callAjaxPost(url,datos) {
     let request = new XMLHttpRequest();
     request.onreadystatechange = function () {
         if(this.readyState == 4 && this.status == 200){
-
         }
     };
     request.open("POST", url, true);
-    var jsonString = JSON.stringify(datosF())
+    var jsonString = JSON.stringify(datos)
     request.setRequestHeader("Content-type", "application/json");
     request.send(jsonString);
-
 }
-
 
 
 function searchProveedor() {
@@ -132,20 +107,19 @@ function cargarDatos(){
 function loadByIdProveedor(id){
     let url = "/VedeloAquiSA2/api/Proveedores/"+id;
     callAjax(url, asignaValoresCargados )
-
 }
 
 function callAjax(url,callback) {
     let request = new XMLHttpRequest();
-    request.open("GET", url, true);
+
     request.onreadystatechange = function () {
         if(this.readyState == 4 && this.status == 200){
             let responseText = JSON.parse(this.responseText);
             callback(responseText);
         }
     };
+    request.open("GET", url, true);
     request.send();
-
 }
 
 
@@ -155,9 +129,6 @@ function asignaValoresCargados(proveedor){
     setInnerHtml("actualizarContenedor" , theHtml);
     theHtml=getProveedoresActualizaHTML(proveedor);
     setInnerHtml("actualizarContenedor" , theHtml);
-
-
-
 }
 
 function getProveedoresActualizaHTML(proveedor) {
@@ -189,9 +160,7 @@ function getProveedoresActualizaHTML(proveedor) {
         '            <input id="logoProveedor" name="logoProveedor" type="text"  placeholder="'+ proveedor.logoProveedor +'"   value="'+ proveedor.logoProveedor +'" requiered pattern="https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)" />\n' +
         '\n' +
         '        </div>'+
-        '<button type="button" class="btn btn-primary center-blobk"   onclick="actualizarProveedor()">Comprar</button>';
-
-
+        '<button type="button" class="btn btn-primary center-blobk"   onclick="paramCallAjaxActualProv()">Comprar</button>';
 }
 
 

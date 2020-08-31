@@ -22,7 +22,7 @@
 </div>
 
 
-<form action="<%=request.getContextPath()%>/index.jsp"  >
+<form action="<%=request.getContextPath()%>/index.jsp"  class="boton-terminar" >
     <input type="submit"  value="Terminar"   />
 </form>
 

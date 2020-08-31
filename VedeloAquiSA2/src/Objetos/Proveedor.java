@@ -2,9 +2,6 @@ package Objetos;
 
 public class Proveedor {
 
-
-
-
     String cedulaJurFisProveedor;
     String nombreProveedor;
     String fechaInProveedor;
@@ -12,6 +9,7 @@ public class Proveedor {
     String logoProveedor;
     String acogeOfertasS;
     int cantidadProductos;
+    String mensajeExiste;
 
     public Proveedor(){};
     public Proveedor(String cedulaJurFisProveedor,
@@ -26,8 +24,6 @@ public class Proveedor {
         this.contrasenaProveedor = contrasenaProveedor;
         this.acogeOfertasS = acogeOfertasS;
         this.logoProveedor = logoProveedor;
-
-
     }
 
 

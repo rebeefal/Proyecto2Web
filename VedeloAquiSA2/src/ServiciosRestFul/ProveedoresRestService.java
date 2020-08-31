@@ -14,8 +14,7 @@ import javax.ws.rs.core.Response;
 public class ProveedoresRestService extends Datos {
 
 
-
-
+    // Servicio para agregar los proveedores
     @POST
     @Path("/add")
     @Produces(MediaType.APPLICATION_JSON)
@@ -26,6 +25,7 @@ public class ProveedoresRestService extends Datos {
 
     }
 
+    // Servicio para mostrar todos los usuarios
     @GET
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
@@ -37,18 +37,19 @@ public class ProveedoresRestService extends Datos {
         return jsonArray.build();
     }
 
+    // Servicio para recuperar los datos de un proveedor, mostrarlos al usuario y luego actualizarlos
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public JsonObject Listar_ProveedorPorId (@PathParam("id")String id ) {
-        Proveedor proveedor = new Proveedor();
+        Proveedor proveedor;
         proveedor = listaProveedorPorId(id);
         return convertProveedorToJson(proveedor);
     }
 
 
-
+// Servicio para actualizar los datos de un proveedor
     @PUT
     @Path("/update")
     @Produces(MediaType.APPLICATION_JSON)

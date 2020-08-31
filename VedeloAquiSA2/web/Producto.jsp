@@ -72,13 +72,13 @@
         </div>
 
         <div class="submit">
-            <input type="submit" value="Agregar" id="form_button" onclick="callAjaxPost()" />
+            <input type="submit" value="Agregar" id="form_button" onclick="paramCallAjaxProductos()" />
         </div>
 
     </form><!-- // End form -->
 
 
-    <form action="<%=request.getContextPath()%>/index.jsp"  >
+    <form action="<%=request.getContextPath()%>/index.jsp"  class="boton-terminar" >
         <input type="submit"  value="Terminar"   />
     </form>
 </div><!-- // End #container -->
